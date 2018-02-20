@@ -1,1 +1,1 @@
-# info360
+# Info360 Project
