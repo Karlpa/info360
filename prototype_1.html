@@ -111,12 +111,47 @@
             map.fitBounds(bounds);
         });
 
+        // Define the symbol, using one of the predefined paths ('CIRCLE')
+        // supplied by the Google Maps JavaScript API.
+        var lineSymbol = {
+          path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+          scale: 8,
+          strokeColor: '#393'
+        };
+
+        // Create the polyline and add the symbol to it via the 'icons' property.
+        var line = new google.maps.Polyline({
+          path: [{lat: 47.661289, lng: -122.311998}, {lat: 47.661296, lng: -122.313747}, {lat: 47.663081, lng: -122.313682}, {lat: 47.663081, lng: -122.311998}, {lat: 47.661289, lng: -122.312062} ],
+          icons: [{
+            icon: lineSymbol,
+            offset: '100%'
+          }],
+          map: map
+        });
+
+        animateCircle(line);
+      }
+
+      // Use the DOM setInterval() function to change the offset of the symbol
+      // at fixed intervals.
+      function animateCircle(line) {
+          var count = 0;
+          window.setInterval(function() {
+            count = (count + 0.25) % 200;
+
+            var icons = line.get('icons');
+            icons[0].offset = (count / 2) + '%';
+            line.set('icons', icons);
+        }, 20);
+      }
+
 
 
         var transitLayer = new google.maps.TransitLayer();
         transitLayer.setMap(map);
 
-    }
+    
+
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyCZS6rpeZW9zhGqEGiVteacHgnITcCHc&callback=initMap&libraries=places">
     </script>
